@@ -1,8 +1,13 @@
 package ru.netology.javacore;
 
 public class Request {
+
     private final String type;
-    private final String task;
+    private String task;
+
+    public Request(String type) {
+        this.type = type;
+    }
 
     public Request(String type, String task) {
         this.type = type;

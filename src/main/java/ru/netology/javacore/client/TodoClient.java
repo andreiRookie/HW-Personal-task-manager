@@ -25,23 +25,56 @@ public class TodoClient {
         Gson gson = new Gson();
         int typeInput;
         String taskInput;
+        OperationType operationType;
+        Request request;
 
-        System.out.println("Enter operation number: 1 - to add task; 2 - to remove task");
+        System.out.println("Enter operation number: 1 - to add task; "
+                + "2 - to remove task; 3 - to restore removed task");
+
         typeInput = Integer.parseInt(scanner.nextLine());
+        operationType = OperationType.fromNumber(typeInput);
 
-        System.out.println("Enter new task:");
-        taskInput = scanner.nextLine();
+        switch (operationType) {
+            case Add:
+            case Remove: {
+                System.out.println("Enter task to add/remove:");
+                taskInput = scanner.nextLine();
+
+                request = new Request(operationType.getName(), taskInput);
+                break;
+            }
+            case Restore: {
+                request = new  Request(operationType.getName());
+                break;
+            }
+            default: throw new IllegalArgumentException("unknown operation");
+        }
+
+//        if (typeInput != 3) {
+//            System.out.println("Enter task to add/remove:");
+//            taskInput = scanner.nextLine();
+//            request = new Request(operationType.getName(), taskInput);
+//        } else {
+//            request = new Request(operationType.getName());
+//        }
+
+        String json = gson.toJson(request);
 
         try (Socket socket = new Socket(host, port);
              PrintWriter outWriter = new PrintWriter(socket.getOutputStream());
              BufferedReader inReader = new BufferedReader(new InputStreamReader(socket.getInputStream()))
         ) {
-            OperationType operationType = OperationType.fromNumber(typeInput);
+//            OperationType operationType = OperationType.fromNumber(typeInput);
 
-            Request request = new Request(operationType.getName(), taskInput);
+//            Request request;
+//            request = switch (operationType) {
+//                case OperationType.Add: new Request(operationType.getName(), taskInput);
+//                case OperationType.Remove: new  Request(operationType.getName(), taskInput);
+//                case OperationType.Restore: new  Request(operationType.getName());
+//                default: throw new IllegalArgumentException("unknown operation");
+//            };
 
-            String json = gson.toJson(request);
-            System.out.println("Request json: \n" + json);
+//            Request request = typeInput != 0 ? new Request(operationType.getName(), taskInput) : new Request(operationType.getName());
 
             outWriter.println(json);
             outWriter.flush();

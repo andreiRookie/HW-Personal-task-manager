@@ -2,7 +2,8 @@ package ru.netology.javacore.client;
 
 public enum OperationType {
     Add("ADD"),
-    Remove("REMOVE");
+    Remove("REMOVE"),
+    Restore("RESTORE");
 
     private final String name;
     private OperationType(final String name) {
@@ -15,6 +16,8 @@ public enum OperationType {
                 return OperationType.Add;
             case 2:
                 return OperationType.Remove;
+            case 3:
+                return OperationType.Restore;
             default:
                 throw new IllegalArgumentException("unknown operation");
         }

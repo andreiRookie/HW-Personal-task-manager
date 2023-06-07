@@ -10,6 +10,7 @@ public class TodoServer {
     private final Todos todos;
     private static final String ADD = "ADD";
     private static final String REMOVE = "REMOVE";
+    private static final String RESTORE = "RESTORE";
 
     public TodoServer(int port, Todos todos) {
         this.port = port;
@@ -33,7 +34,6 @@ public class TodoServer {
                     json = inReader.readLine();
                     System.out.println("json " + json);
                     Request request = gson.fromJson(json, Request.class);
-                    System.out.println(request);
 
                     operationType = request.getType();
 
@@ -46,12 +46,16 @@ public class TodoServer {
                             todos.removeTask(request.getTask());
                             break;
                         }
+                        case RESTORE: {
+                            todos.restoreTask();
+                            break;
+                        }
                         default:
                             throw new IllegalArgumentException("unknown operation");
                     }
 
                     String response = todos.getAllTasks();
-                    System.out.println("Todos: " + response);
+                    System.out.println("Current todos: " + response);
 
                     outWriter.println(response);
                     outWriter.flush();
