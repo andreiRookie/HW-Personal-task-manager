@@ -50,31 +50,12 @@ public class TodoClient {
             default: throw new IllegalArgumentException("unknown operation");
         }
 
-//        if (typeInput != 3) {
-//            System.out.println("Enter task to add/remove:");
-//            taskInput = scanner.nextLine();
-//            request = new Request(operationType.getName(), taskInput);
-//        } else {
-//            request = new Request(operationType.getName());
-//        }
-
         String json = gson.toJson(request);
 
         try (Socket socket = new Socket(host, port);
              PrintWriter outWriter = new PrintWriter(socket.getOutputStream());
              BufferedReader inReader = new BufferedReader(new InputStreamReader(socket.getInputStream()))
         ) {
-//            OperationType operationType = OperationType.fromNumber(typeInput);
-
-//            Request request;
-//            request = switch (operationType) {
-//                case OperationType.Add: new Request(operationType.getName(), taskInput);
-//                case OperationType.Remove: new  Request(operationType.getName(), taskInput);
-//                case OperationType.Restore: new  Request(operationType.getName());
-//                default: throw new IllegalArgumentException("unknown operation");
-//            };
-
-//            Request request = typeInput != 0 ? new Request(operationType.getName(), taskInput) : new Request(operationType.getName());
 
             outWriter.println(json);
             outWriter.flush();
