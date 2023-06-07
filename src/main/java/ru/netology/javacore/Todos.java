@@ -35,4 +35,8 @@ public class Todos {
         sortedTasks.forEach(task -> sb.append("\"").append(task).append("\"").append(" "));
         return sb.toString();
     }
+
+    public HashSet<String> getTasks() {
+        return tasks;
+    }
 }
