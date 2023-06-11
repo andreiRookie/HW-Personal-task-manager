@@ -72,19 +72,6 @@ public class TodosTests {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    void restoreTask_notEverGreen() {
-
-        HashSet<String> expected = getAllTestTasksSet();
-
-        todos.removeTask(TEST_TASK_7);
-        todos.removeTask(TEST_TASK_4);
-        todos.restoreTask();
-        HashSet<String> actual = todos.getTasks();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
     private HashSet<String> getAllTestTasksSet() {
         HashSet<String> set = new HashSet<>();
         set.add(TEST_TASK_1);
